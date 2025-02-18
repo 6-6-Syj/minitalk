@@ -44,13 +44,27 @@ En cas de succès, sigaction renvoie 0. En cas d'erreur, elle renvoie -1 et rens
     // Routine de gestion de SIGINT
     void sigint_handler(int signal)
     {
-    if (signal == SIGINT)
-        printf("\nIntercepted SIGINT!\n");
+        if (signal == SIGINT)
+            printf("\nIntercepted SIGINT!\n");
     }
 
     void set_signal_action(void)
     {
-    struct sigaction act;
+        struct sigaction act;
+        bzero(&act, sizeof(act));
+        act.sa_handler = &sigint_handler;
+        sigaction(SIGINT, &act, NULL);
+    }
+    
+    int main(void)
+    {
+        set_signal_action();
+        while (1)
+        continue;
+        return (0);
+    }
+
+Ce programme intercepte le signal SIGINT (Ctrl+C) et affiche un message au lieu de terminer le processus.
 
 La variable sa_handler de la structure sigaction spécifie l'action qui doit être associée au signal. On peut lui indiquer une de trois choses :
 
@@ -58,18 +72,4 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
 -   SIG_IGN pour ignorer le signal,
 -   un pointeur vers une routine de gestion de signal.
 
-### Exemple de code
 
-    bzero(&act, sizeof(act));
-    act.sa_handler = &sigint_handler;
-    sigaction(SIGINT, &act, NULL);
-
-    int main(void)
-    {
-    set_signal_action();
-    while (1)
-    continue;
-    return (0);
-    }
-
-Ce programme intercepte le signal SIGINT (Ctrl+C) et affiche un message au lieu de terminer le processus.
