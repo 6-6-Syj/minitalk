@@ -27,8 +27,8 @@ La fonction kill renvoie 0 en cas de succès et en cas d'erreur, -1, avec `errno
 ## Utilisation de sigaction
 
     int sigaction(int signum, const struct sigaction *restrict act, struct sigaction *restrict oldact);
-    Paramètres :
-
+    
+Paramètres :
 -   signum : le signal pour lequel on souhaite changer l'action,
 -   act : un pointeur vers une structure de type sigaction qui va permettre entre autres d'indiquer une routine de gestion de signaux,
 -   oldact : un pointeur vers une autre structure de type sigaction dans lequel on souhaiterait sauvegarder l'ancien comportement en réaction au signal. Si l'on n'a pas particulièrement besoin de sauvegarder l'ancienne réaction, on peut simplement mettre NULL ici.
