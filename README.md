@@ -1,13 +1,13 @@
 # MINITALK
 
-## 1. Qu'est-ce qu'un signal ?
+##     1. Qu'est-ce qu'un signal ?
 
 Un signal est une forme de communication inter-processus utilisée dans les systèmes Unix et POSIX. Il s'agit d'une notification asynchrone envoyée à un processus en cours d'exécution pour l'informer d'un événement spécifique.
 
 Lorsqu'un signal est reçu, le système d'exploitation interrompt l'exécution normale du processus et déclenche une réaction prédéfinie, qui peut inclure la terminaison du processus.
 
 Ce mécanisme permet une communication limitée mais efficace entre les processus, offrant un moyen standardisé de gérer diverses situations système.
-## 2. Envoyer un signal avec l'appel système `kill` en C
+##     2. Envoyer un signal avec l'appel système `kill` en C
 
 Dans un précédent article sur la création et la terminaison de processus fils, on a rapidement vu l'appel système kill de la bibliothèque signal.h. Il existe plusieurs autres appels systèmes pour demander au système d'envoyer un signal depuis notre programme en C, mais celui-ci est le plus communément utilisé. Rappelons son prototype :
 
@@ -23,7 +23,7 @@ Ses paramètres sont :
 
 La fonction kill renvoie 0 en cas de succès et en cas d'erreur, -1, avec `errno mis à jour pour indiquer les détails de l'erreur.
 
-## 3. Utilisation de sigaction
+##     3. Utilisation de sigaction
 
     int sigaction(int signum, const struct sigaction *restrict act, struct sigaction *restrict oldact);
     
@@ -34,7 +34,7 @@ Paramètres :
 
 En cas de succès, sigaction renvoie 0. En cas d'erreur, elle renvoie -1 et renseigne errno
 
-### 4.Indiquer une routine de gestion de signaux dans la structure sigaction
+##     4.Indiquer une routine de gestion de signaux dans la structure sigaction
 
     #include <signal.h>
     #include <stdio.h>
