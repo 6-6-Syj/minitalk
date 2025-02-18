@@ -1,4 +1,4 @@
-# minitalk
+# MINITALK
 
 ## Qu'est-ce qu'un signal ?
 
