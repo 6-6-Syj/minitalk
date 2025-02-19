@@ -72,9 +72,9 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
 -   SIG_IGN pour ignorer le signal,
 -   un pointeur vers une routine de gestion de signal.
 
-##    5. Structures
+##    5. Structures & types
 
-###    sigaction
+###    struct sigaction
         struct sigaction	{
         void		(*sa_handler)(int);
         void		(*sa_sigaction)(int, siginfo_t *, void *);
@@ -83,7 +83,7 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
         void		(*sa_restorer)(void);
         };
         
-###    siginfo
+###    siginfo_t
         siginfo_t	{
         int      si_signo;			Signal number
         int      si_errno;			An errno value
@@ -110,3 +110,13 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
         int      si_syscall;		Number of attempted system call
         unsigned int si_arch; 		Architecture of attempted system call
         }
+
+
+###    sigset_t
+  Conformément à la norme POSIX, les masques ne sont pas de type int mais de type sigset_t défini dans le fichier /usr/include/asm/signal.h par l'une des définitions suivantes :
+ 
+    typedef unsigned long sigset_t;
+     
+    typedef struct {
+        unsigned long sig[_NSIG_WORDS];
+    } sigset_t;
