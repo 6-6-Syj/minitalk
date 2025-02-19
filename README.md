@@ -199,6 +199,7 @@ On some architectures a union is involved: do not assign to both
   bit support" below for more details.
 
 -    SA_EXPOSE_TAGBITS (since Linux 5.11)
+
         -  Normally, when delivering a signal, an architecture-
           specific set of tag bits are cleared from the si_addr field
           of siginfo_t.  If this flag is set, an architecture-
