@@ -75,6 +75,15 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
 ##    5. Structures & types
 
 ###    struct sigaction
+
+        struct sigaction	{
+        void		(*sa_handler)(int);
+        void		(*sa_sigaction)(int, siginfo_t *, void *);
+        sigset_t	sa_mask;
+        int			sa_flags;
+        void		(*sa_restorer)(void);
+        };
+        
 The sigaction() system call is used to change the action taken by
        a process on receipt of a specific signal.  (See signal(7) for an
        overview of signals.)
@@ -85,16 +94,6 @@ The sigaction() system call is used to change the action taken by
    If act is non-NULL, the new action for signal signum is installed
    from act.  If oldact is non-NULL, the previous action is saved in
    oldact.
-
-The sigaction structure is defined as something like:
-
-        struct sigaction	{
-        void		(*sa_handler)(int);
-        void		(*sa_sigaction)(int, siginfo_t *, void *);
-        sigset_t	sa_mask;
-        int			sa_flags;
-        void		(*sa_restorer)(void);
-        };
 
 On some architectures a union is involved: do not assign to both
        sa_handler and sa_sigaction.
@@ -209,11 +208,6 @@ On some architectures a union is involved: do not assign to both
   Programs that need to be compatible with Linux versions
   older than 5.11 must use SA_UNSUPPORTED to probe for
   support.
-
-   The siginfo_t argument to a SA_SIGINFO handler
-       When the SA_SIGINFO flag is specified in act.sa_flags, the signal
-       handler address is passed via the act.sa_sigaction field.  This
-       handler takes three arguments, as follows:
 
         
 ###    siginfo_t
