@@ -95,6 +95,126 @@ The sigaction structure is defined as something like:
         int			sa_flags;
         void		(*sa_restorer)(void);
         };
+
+On some architectures a union is involved: do not assign to both
+       sa_handler and sa_sigaction.
+
+   The sa_restorer field is not intended for application use.  (POSIX
+   does not specify a sa_restorer field.)  Some further details of
+   the purpose of this field can be found in sigreturn(2).
+
+   sa_handler specifies the action to be associated with signum and
+   can be one of the following:
+
+   •  SIG_DFL for the default action.
+
+   •  SIG_IGN to ignore this signal.
+
+   •  A pointer to a signal handling function.  This function
+      receives the signal number as its only argument.
+
+   If SA_SIGINFO is specified in sa_flags, then sa_sigaction (instead
+   of sa_handler) specifies the signal-handling function for signum.
+   This function receives three arguments, as described below.
+
+   sa_mask specifies a mask of signals which should be blocked (i.e.,
+   added to the signal mask of the thread in which the signal handler
+   is invoked) during execution of the signal handler.  In addition,
+   the signal which triggered the handler will be blocked, unless the
+   SA_NODEFER flag is used.
+
+   sa_flags specifies a set of flags which modify the behavior of the
+   signal.  It is formed by the bitwise OR of zero or more of the
+   following:
+
+   SA_NOCLDSTOP
+              If signum is SIGCHLD, do not receive notification when
+              child processes stop (i.e., when they receive one of
+              SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e.,
+              they receive SIGCONT) (see wait(2)).  This flag is
+              meaningful only when establishing a handler for SIGCHLD.
+
+   SA_NOCLDWAIT (since Linux 2.6)
+          If signum is SIGCHLD, do not transform children into
+          zombies when they terminate.  See also waitpid(2).  This
+          flag is meaningful only when establishing a handler for
+          SIGCHLD, or when setting that signal's disposition to
+          SIG_DFL.
+
+  If the SA_NOCLDWAIT flag is set when establishing a handler
+  for SIGCHLD, POSIX.1 leaves it unspecified whether a
+  SIGCHLD signal is generated when a child process
+  terminates.  On Linux, a SIGCHLD signal is generated in
+  this case; on some other implementations, it is not.
+
+   SA_NODEFER
+          Do not add the signal to the thread's signal mask while the
+          handler is executing, unless the signal is specified in
+          act.sa_mask.  Consequently, a further instance of the
+          signal may be delivered to the thread while it is executing
+          the handler.  This flag is meaningful only when
+          establishing a signal handler.
+
+   SA_ONSTACK
+          Call the signal handler on an alternate signal stack
+          provided by sigaltstack(2).  If an alternate stack is not
+          available, the default stack will be used.  This flag is
+          meaningful only when establishing a signal handler.
+
+   SA_RESETHAND
+          Restore the signal action to the default upon entry to the
+          signal handler.  This flag is meaningful only when
+          establishing a signal handler.
+
+   SA_RESTART
+          Provide behavior compatible with BSD signal semantics by
+          making certain system calls restartable across signals.
+          This flag is meaningful only when establishing a signal
+          handler.  See signal(7) for a discussion of system call
+          restarting.
+
+   SA_RESTORER
+          Not intended for application use.  This flag is used by C
+          libraries to indicate that the sa_restorer field contains
+          the address of a "signal trampoline".  See sigreturn(2) for
+          more details.
+
+   SA_SIGINFO (since Linux 2.2)
+          The signal handler takes three arguments, not one.  In this
+          case, sa_sigaction should be set instead of sa_handler.
+          This flag is meaningful only when establishing a signal
+          handler.
+
+   SA_UNSUPPORTED (since Linux 5.11)
+          Used to dynamically probe for flag bit support.
+
+  If an attempt to register a handler succeeds with this flag
+  set in act->sa_flags alongside other flags that are
+  potentially unsupported by the kernel, and an immediately
+  subsequent sigaction() call specifying the same signal
+  number and with a non-NULL oldact argument yields
+  SA_UNSUPPORTED clear in oldact->sa_flags, then
+  oldact->sa_flags may be used as a bitmask describing which
+  of the potentially unsupported flags are, in fact,
+  supported.  See the section "Dynamically probing for flag
+  bit support" below for more details.
+
+   SA_EXPOSE_TAGBITS (since Linux 5.11)
+          Normally, when delivering a signal, an architecture-
+          specific set of tag bits are cleared from the si_addr field
+          of siginfo_t.  If this flag is set, an architecture-
+          specific subset of the tag bits will be preserved in
+          si_addr.
+
+  Programs that need to be compatible with Linux versions
+  older than 5.11 must use SA_UNSUPPORTED to probe for
+  support.
+
+   The siginfo_t argument to a SA_SIGINFO handler
+       When the SA_SIGINFO flag is specified in act.sa_flags, the signal
+       handler address is passed via the act.sa_sigaction field.  This
+       handler takes three arguments, as follows:
+
         
 ###    siginfo_t
 
