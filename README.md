@@ -126,14 +126,14 @@ On some architectures a union is involved: do not assign to both
    signal.  It is formed by the bitwise OR of zero or more of the
    following:
 
-   SA_NOCLDSTOP
+-    SA_NOCLDSTOP
         If signum is SIGCHLD, do not receive notification when
         child processes stop (i.e., when they receive one of
         SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e.,
         they receive SIGCONT) (see wait(2)).  This flag is
         meaningful only when establishing a handler for SIGCHLD.
 
-   SA_NOCLDWAIT (since Linux 2.6)
+-    SA_NOCLDWAIT (since Linux 2.6)
           If signum is SIGCHLD, do not transform children into
           zombies when they terminate.  See also waitpid(2).  This
           flag is meaningful only when establishing a handler for
@@ -146,7 +146,7 @@ On some architectures a union is involved: do not assign to both
   terminates.  On Linux, a SIGCHLD signal is generated in
   this case; on some other implementations, it is not.
 
-   SA_NODEFER
+-    SA_NODEFER
           Do not add the signal to the thread's signal mask while the
           handler is executing, unless the signal is specified in
           act.sa_mask.  Consequently, a further instance of the
@@ -154,7 +154,7 @@ On some architectures a union is involved: do not assign to both
           the handler.  This flag is meaningful only when
           establishing a signal handler.
 
-   SA_ONSTACK
+-    SA_ONSTACK
           Call the signal handler on an alternate signal stack
           provided by sigaltstack(2).  If an alternate stack is not
           available, the default stack will be used.  This flag is
