@@ -127,11 +127,11 @@ On some architectures a union is involved: do not assign to both
    following:
 
    SA_NOCLDSTOP
-\t\t\tIf signum is SIGCHLD, do not receive notification when
-\t\t\tchild processes stop (i.e., when they receive one of
-\t\t\tSIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e.,
-\t\t\tthey receive SIGCONT) (see wait(2)).  This flag is
-\t\t\tmeaningful only when establishing a handler for SIGCHLD.
+        If signum is SIGCHLD, do not receive notification when
+        child processes stop (i.e., when they receive one of
+        SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e.,
+        they receive SIGCONT) (see wait(2)).  This flag is
+        meaningful only when establishing a handler for SIGCHLD.
 
    SA_NOCLDWAIT (since Linux 2.6)
           If signum is SIGCHLD, do not transform children into
