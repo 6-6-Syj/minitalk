@@ -75,6 +75,19 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
 ##    5. Structures & types
 
 ###    struct sigaction
+The sigaction() system call is used to change the action taken by
+       a process on receipt of a specific signal.  (See signal(7) for an
+       overview of signals.)
+
+   signum specifies the signal and can be any valid signal except
+   SIGKILL and SIGSTOP.
+
+   If act is non-NULL, the new action for signal signum is installed
+   from act.  If oldact is non-NULL, the previous action is saved in
+   oldact.
+
+The sigaction structure is defined as something like:
+
         struct sigaction	{
         void		(*sa_handler)(int);
         void		(*sa_sigaction)(int, siginfo_t *, void *);
@@ -84,6 +97,37 @@ La variable sa_handler de la structure sigaction spécifie l'action qui doit êt
         };
         
 ###    siginfo_t
+
+   The siginfo_t argument to a SA_SIGINFO handler
+       When the SA_SIGINFO flag is specified in act.sa_flags, the signal
+       handler address is passed via the act.sa_sigaction field.  This
+       handler takes three arguments, as follows:
+
+           void handler(int sig, siginfo_t *info, void *ucontext)
+           {
+               ...
+           }
+
+   These three arguments are as follows
+
+   sig    The number of the signal that caused invocation of the
+          handler.
+
+   info   A pointer to a siginfo_t, which is a structure containing
+          further information about the signal, as described below.
+
+   ucontext
+          This is a pointer to a ucontext_t structure, cast to
+          void *.  The structure pointed to by this field contains
+          signal context information that was saved on the user-space
+          stack by the kernel; for details, see sigreturn(2).
+          Further information about the ucontext_t structure can be
+          found in getcontext(3) and signal(7).  Commonly, the
+          handler function doesn't make any use of the third
+          argument.
+
+   The siginfo_t data type is a structure with the following fields:
+       
         siginfo_t	{
         int      si_signo;			Signal number
         int      si_errno;			An errno value
