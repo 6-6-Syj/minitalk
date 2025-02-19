@@ -127,14 +127,14 @@ On some architectures a union is involved: do not assign to both
    following:
 
 -    SA_NOCLDSTOP
-        If signum is SIGCHLD, do not receive notification when
+       - If signum is SIGCHLD, do not receive notification when
         child processes stop (i.e., when they receive one of
         SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e.,
         they receive SIGCONT) (see wait(2)).  This flag is
         meaningful only when establishing a handler for SIGCHLD.
 
 -    SA_NOCLDWAIT (since Linux 2.6)
-          If signum is SIGCHLD, do not transform children into
+        -  If signum is SIGCHLD, do not transform children into
           zombies when they terminate.  See also waitpid(2).  This
           flag is meaningful only when establishing a handler for
           SIGCHLD, or when setting that signal's disposition to
@@ -147,7 +147,7 @@ On some architectures a union is involved: do not assign to both
   this case; on some other implementations, it is not.
 
 -    SA_NODEFER
-          Do not add the signal to the thread's signal mask while the
+        -  Do not add the signal to the thread's signal mask while the
           handler is executing, unless the signal is specified in
           act.sa_mask.  Consequently, a further instance of the
           signal may be delivered to the thread while it is executing
@@ -155,37 +155,37 @@ On some architectures a union is involved: do not assign to both
           establishing a signal handler.
 
 -    SA_ONSTACK
-          Call the signal handler on an alternate signal stack
+        -  Call the signal handler on an alternate signal stack
           provided by sigaltstack(2).  If an alternate stack is not
           available, the default stack will be used.  This flag is
           meaningful only when establishing a signal handler.
 
 -    SA_RESETHAND
-          Restore the signal action to the default upon entry to the
+        -  Restore the signal action to the default upon entry to the
           signal handler.  This flag is meaningful only when
           establishing a signal handler.
 
 -    SA_RESTART
-          Provide behavior compatible with BSD signal semantics by
+        -  Provide behavior compatible with BSD signal semantics by
           making certain system calls restartable across signals.
           This flag is meaningful only when establishing a signal
           handler.  See signal(7) for a discussion of system call
           restarting.
 
 -    SA_RESTORER
-          Not intended for application use.  This flag is used by C
+        -  Not intended for application use.  This flag is used by C
           libraries to indicate that the sa_restorer field contains
           the address of a "signal trampoline".  See sigreturn(2) for
           more details.
 
 -    SA_SIGINFO (since Linux 2.2)
-          The signal handler takes three arguments, not one.  In this
+        -  The signal handler takes three arguments, not one.  In this
           case, sa_sigaction should be set instead of sa_handler.
           This flag is meaningful only when establishing a signal
           handler.
 
-=    SA_UNSUPPORTED (since Linux 5.11)
-          Used to dynamically probe for flag bit support.
+-    SA_UNSUPPORTED (since Linux 5.11)
+        -  Used to dynamically probe for flag bit support.
 
   If an attempt to register a handler succeeds with this flag
   set in act->sa_flags alongside other flags that are
@@ -199,7 +199,7 @@ On some architectures a union is involved: do not assign to both
   bit support" below for more details.
 
 -    SA_EXPOSE_TAGBITS (since Linux 5.11)
-          Normally, when delivering a signal, an architecture-
+        -  Normally, when delivering a signal, an architecture-
           specific set of tag bits are cleared from the si_addr field
           of siginfo_t.  If this flag is set, an architecture-
           specific subset of the tag bits will be preserved in
