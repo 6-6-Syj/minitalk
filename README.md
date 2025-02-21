@@ -279,3 +279,20 @@ On some architectures a union is involved: do not assign to both
     typedef struct {
         unsigned long sig[_NSIG_WORDS];
     } sigset_t;
+
+###    sig_atomic_t
+sig_atomic_t est un type de données entier qui garantit l'atomicité des accès, même en présence d'interruptions asynchrones causées par des signaux7. Voici ses principales caractéristiques :
+
+Type entier : sig_atomic_t est généralement défini comme équivalent au type de base int1.
+
+Atomicité : Il assure que les opérations de lecture et d'écriture sur une variable de ce type sont atomiques, c'est-à-dire qu'elles ne peuvent pas être interrompues15.
+
+Portabilité : L'utilisation de sig_atomic_t assure une portabilité générale lors de l'échange d'informations entre un programme et un gestionnaire de signal1.
+
+Utilisation avec volatile : Il est souvent recommandé d'utiliser sig_atomic_t avec le qualificateur volatile pour éviter les optimisations du compilateur qui pourraient compromettre l'atomicité1.
+
+Limitations : L'atomicité est garantie uniquement pour les transferts simples entre la mémoire et le processeur, pas pour des opérations plus complexes comme l'incrémentation1.
+
+Taille : Sous Linux, sig_atomic_t est généralement implémenté comme un int ordinaire5.
+
+Il est important de noter que sig_atomic_t est principalement utilisé pour la communication sûre entre le programme principal et les gestionnaires de signaux, où l'atomicité des opérations est cruciale pour éviter les conditions de concurrence6.
