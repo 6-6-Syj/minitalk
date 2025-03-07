@@ -1,5 +1,7 @@
 # MINITALK
 
+# watch -n 1 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+
 ##     1. Qu'est-ce qu'un signal ?
 
 Un signal est une forme de communication inter-processus utilisée dans les systèmes Unix et POSIX. Il s'agit d'une notification asynchrone envoyée à un processus en cours d'exécution pour l'informer d'un événement spécifique.
